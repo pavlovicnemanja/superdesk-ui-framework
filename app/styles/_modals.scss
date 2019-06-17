@@ -32,6 +32,7 @@ $modal-footer-height : 48px;
 $modal-subnav-height : $nav-height;
 
 $modal-padding : 2rem;
+$space-around: 40px;
 
 // Box shadow
 @mixin modal-box-shadow {
@@ -47,7 +48,7 @@ $modal-sizes: (
 ) !default;
 
 @mixin modal-base(
-    $align-items: flex-start, 
+    $align-items: flex-start,
     $space-around: 40px
     ) {
     position: fixed;
@@ -100,6 +101,26 @@ $modal-sizes: (
     &.in {
         display: flex !important;
     }
+
+    &.modal--draggable {
+        padding: $space-around;
+        top: 0; bottom: 0;
+        left: 0; right: 0;
+    }
+
+    .ui-draggable-handle {
+        cursor: move;
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+
+        &:active {
+            cursor: grabbing;
+            cursor: -moz-grabbing;
+            cursor: -webkit-grabbing;
+        }
+    }
+
     // default size, no class needed
     .modal__dialog {
         @include modal-dialog();

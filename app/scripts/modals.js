@@ -1,4 +1,5 @@
 /* eslint-disable */
+require('jquery-ui/ui/widgets/draggable.js');
 
 sdModal.$inject = ['$document', '$rootScope'];
 function sdModal($document, $rootScope) {
@@ -9,7 +10,8 @@ function sdModal($document, $rootScope) {
             '</div><div class="modal__backdrop fade in" ng-if="model"></div>'].join(''),
         transclude: true,
         scope: {
-            model: '='
+            model: '=',
+            draggable: '='
         },
         link: function (scope, element) {
             $rootScope.modals = $rootScope.modals ? $rootScope.modals : 0;
@@ -23,6 +25,7 @@ function sdModal($document, $rootScope) {
                         content.appendTo($document.find('body'));
                         content[0].style = 'z-index: ' + (1050 + $rootScope.modals);
                         content[1].style = 'z-index: ' + (1049 + $rootScope.modals);
+
                         _initialized = true;
                     }
                     content.show().addClass('in');
@@ -33,7 +36,15 @@ function sdModal($document, $rootScope) {
                     $document.find('body').removeClass('modal-open');
                     closeModal();
                 }
+
+                if (scope.draggable) {
+                    $('.modal__dialog').draggable({
+                        handle: '.modal__header'
+                    });
+                    element.addClass('modal--draggable');
+                }
             });
+
 
             var closeModal = function () {
                 scope.model = false;
